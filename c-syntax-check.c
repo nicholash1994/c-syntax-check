@@ -5,28 +5,17 @@
 #define NOT_COMMENT !is_scomment && !is_mcomment
 #define NOT_QUOTE !is_squote && !is_dquote
 
-// {{{{{{{{{{{{{{{{{{{{{{{[[[[
-
-/* asdfasdfasdfasdf */
-
-// }}}}}}}}}}}}}}}}}}}}}}]
-
 // prints an error message and exits the program
 void syntax_error_exit();
-int brace_syntax_check(char* string);
 // returns a right brace's corresponding left brace
-// returns the null byte if the character is not a right brace
+// returns a null byte if the character is not a right brace
 char match_left(char);
-
-// these functions should be called in this order 
-// in order to work properly. If called in a different
-// order, or if not all of the functions were used,
-// the program may not work correctly
 void remove_comments(char* string);
 void remove_strings(char* code);
 // this function removes everything except
 // brackets, parentheses and curly braces
 void strip_code(char* code);
+int brace_syntax_check(char* string);
 
 int main(int argc, char** argv) {
 	int j;
@@ -67,6 +56,7 @@ int main(int argc, char** argv) {
 	else
 		printf("Some syntax errors were detected!\n");
 
+	free(output);
 	return 0;
 }
 
@@ -216,7 +206,6 @@ void strip_code(char* code) {
 				|| code[i] == '[' || code[i] == ']')
 			tmp[j++] = code[i];
 
-	printf("%s\n", tmp);
 	tmp[j++] = '\0';
 	strncpy(code, tmp, j);
 	free(tmp);
